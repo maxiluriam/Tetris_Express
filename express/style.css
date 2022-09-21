@@ -6,6 +6,10 @@
   --restartbutoncolor: rgb(143, 143, 143);
 }
 
+html {
+  background-color: rgb(51, 51, 51);
+}
+
 body {
   min-height: 900px;
   margin: 0%;
