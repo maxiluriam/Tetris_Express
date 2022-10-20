@@ -488,6 +488,29 @@ let hitbox = function (Block, grid) {
     }
   }
 };
+let alterSpeed = function (movCount, movSpeed) {
+  let points = parseInt(score.innerHTML);
+  let countCache = movCount;
+  let SpeedCache = movSpeed;
+
+  if (points > 4000 && points < 8000 && movSpeed !== 4 && movSpeed !== 1) {
+    countCache = 4;
+    SpeedCache = 4;
+  } else if (
+    points > 8000 &&
+    points < 12000 &&
+    movSpeed !== 3 &&
+    movSpeed !== 1
+  ) {
+    countCache = 3;
+    SpeedCache = 3;
+  } else if (points > 12000 && movSpeed !== 2 && movSpeed !== 1) {
+    countCache = 2;
+    SpeedCache = 2;
+  }
+
+  return [countCache, SpeedCache, countCache, SpeedCache];
+};
 
 let counter = function (i, j) {
   if (i === j) {
@@ -504,6 +527,66 @@ let pointsUpp = function (sHeld) {
   }
 };
 
+
+document.getElementById("D").addEventListener("click", () => {
+
+  let blockmovement = hitbox(block, grid);
+  lastRotation[0] = block[1].rotation;
+  lastRotation[1] = block[0].x;
+
+
+  console.log("ww")
+  if (death !== true && blockmovement !== "right") {
+    block[0].x++;
+  };
+});
+
+document.getElementById("A").addEventListener("click", () => {
+
+  let blockmovement = hitbox(block, grid);
+  lastRotation[0] = block[1].rotation;
+  lastRotation[1] = block[0].x;
+
+  if (death !== true && blockmovement !== "left") {
+    block[0].x--;
+};
+});
+
+document.getElementById("W").addEventListener("click", () => {
+
+
+  lastRotation[0] = block[1].rotation;
+  lastRotation[1] = block[0].x;
+
+
+  if (death !== true ) {
+    if (block[1].rotation <= 2) {
+      block[1].rotation++;
+    } else {
+      block[1].rotation = block[1].rotation - 3;
+    }
+  };
+
+  rotate(block, grid, lastRotation);
+});
+
+document.getElementById("S").addEventListener("touchstart", () => {
+  if (sHeld) {
+    movCount = 1;
+    movSpeed = 1;
+    sHeld = false;
+
+    console.log("ww");
+  }
+});
+document.getElementById("S").addEventListener("touchend", () => {
+  if (!sHeld) {
+    movCount = 5;
+    movSpeed = 5;
+    sHeld = true;
+  }
+});
+
 let grid = createGrid();
 
 let landed = true;
@@ -518,6 +601,9 @@ let checkCount = 10;
 let checkSpeed = 10;
 let sHeld = true;
 let lastRotation = [0, 0];
+
+let countCache = 5;
+let SpeedCache = 5;
 
 var keys = [];
 document.addEventListener("keydown", keyDownHandler);
@@ -551,26 +637,20 @@ window.addEventListener("keydown", (e) => {
     if (e.key === "p") {
       if (pause === false) {
         pause = true;
-      }
-      if (pause === true) {
+      } else if (pause === true) {
         pause = false;
       }
-    }
-
-    if ((e.key === "a" || e.which === 37) && blockmovement !== "left") {
+    } else if ((e.key === "a" || e.which === 37) && blockmovement !== "left") {
       block[0].x--;
-    }
-    if ((e.key === "d" || e.which === 39) && blockmovement !== "right") {
+    } else if ((e.key === "d" || e.which === 39) && blockmovement !== "right") {
       block[0].x++;
-    }
-    if (e.key === "q") {
+    } else if (e.key === "q") {
       if (block[1].rotation >= 1) {
         block[1].rotation--;
       } else {
         block[1].rotation = block[1].rotation + 3;
       }
-    }
-    if (e.key === "e" || e.key === "w" || e.which === 38) {
+    } else if (e.key === "e" || e.key === "w" || e.which === 38) {
       if (block[1].rotation <= 2) {
         block[1].rotation++;
       } else {
@@ -584,13 +664,20 @@ window.addEventListener("keydown", (e) => {
     //    render(block, grid);
   }
 });
+
 block = chooseBlock();
 let land = false;
 
 let blockTick = setInterval(function () {
   if (pause === false) {
+    // console.log(movCount,movSpeed);
     pointsUpp(sHeld);
     movCount = counter(movCount, movSpeed);
+    [movCount, movSpeed, countCache, SpeedCache] = alterSpeed(
+      movCount,
+      movSpeed
+    );
+    //  console.log(movCount,movSpeed);
 
     let death = checkDeath(grid);
 

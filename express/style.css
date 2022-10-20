@@ -8,6 +8,7 @@
 
 html {
   background-color: rgb(51, 51, 51);
+  touch-action: manipulation;
 }
 
 body {
@@ -16,6 +17,20 @@ body {
   overflow-y: hidden;
 }
 
+#PhoneButtons {
+  grid-row: 25/25;
+  grid-column: 1/29;
+  touch-action: manipulation;
+  margin: auto;
+}
+#PhoneButtons button {
+  padding: 70px;
+  touch-action: manipulation;
+  margin: 10px;
+  border: none;
+
+  border-radius: 10%;
+}
 .body {
   overflow: hidden;
 
@@ -32,8 +47,8 @@ body {
   margin: auto;
   height: 700px;
   width: 500px;
-  grid-row: 2/9;
-  grid-column: 6/11;
+  grid-row: 2/10;
+  grid-column: 6/12;
   background-color: var(--background);
 
   /* border: inset 2px var(--restartbackground); */
@@ -45,26 +60,26 @@ body {
   border: solid 1px black;
 }
 #block.tBlock {
-  background-color: #7a0ab3;
+  background-color: #7c0eb4;
 }
 #block.strait {
-  background-color: #00f0f0;
+  background-color: #20cdcd;
 }
 #block.rightL {
   background-color: #f0a000;
 }
 #block.leftL {
-  background-color: #0000f0;
+  background-color: #1515d1;
 }
 #block.square {
   background-color: #f0f000;
 }
 #block.leftS {
-  background-color: #f00000;
+  background-color: #c30f0f;
 }
 
 #block.rightS {
-  background-color: #00f000;
+  background-color: #0fb90f;
 }
 
 .resetForm {
@@ -104,4 +119,63 @@ body {
 
   vertical-align: text-top;
   text-align: justify;
+}
+#inactive-button {
+  background-color: rgb(51, 51, 51);
+  border: solid 1px rgb(51, 51, 51);
+
+  margin: 10px;
+}
+
+@media screen and (max-width: 1200px) {
+  .body {
+    display: block;
+  }
+
+  #container {
+    height: 350px;
+    width: 266px;
+
+    /* border: inset 2px var(--restartbackground); */
+  }
+  #PhoneButtons {
+
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+
+    height: 100px;
+    width: 200px;
+  }
+  #PhoneButtons button {
+    padding: 20px;
+    display: block;
+    margin: 5px;
+  }
+
+  .resetForm button {
+    font-size: 100%;
+  }
+
+  #score {
+
+    width: 200px;
+    margin: auto;
+
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  #PhoneButtons button {
+    display: none;
+  }
+
+  #container {
+    grid-row: 2/10;
+    grid-column: 6/12;
+
+    /* border: inset 2px var(--restartbackground); */
+  }
 }
